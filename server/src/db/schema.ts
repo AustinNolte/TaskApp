@@ -1,8 +1,18 @@
-// Define your Drizzle tables here, e.g.:
-// import { pgTable, serial, text } from "drizzle-orm/pg-core";
-// export const tasks = pgTable("tasks", {
-//   id: serial("id").primaryKey(),
-//   title: text("title").notNull(),
-// });
+import { boolean, pgTable, serial, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
-export {};
+export const users = pgTable("users", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  hashedPassword: text("hashed_password").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const tasks = pgTable("tasks", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  completed: boolean("completed").notNull().default(false),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+});
