@@ -11,6 +11,8 @@ export const users = pgTable("users", {
 export const tasks = pgTable("tasks", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
+  description: text("description").notNull(),
+  dueDate: timestamp("due_date").notNull(),
   completed: boolean("completed").notNull().default(false),
   userId: uuid("user_id")
     .notNull()

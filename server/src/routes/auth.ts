@@ -22,11 +22,11 @@ const sessionCookieOptions = {
 
 export const authRouter = Router();
 
-authRouter.get("/auth/me", requireAuth, (req, res) => {
+authRouter.get("/me", requireAuth, (req, res) => {
   res.json({ user: req.user });
 });
 
-authRouter.post("/auth/logout", async (req, res) => {
+authRouter.post("/logout", async (req, res) => {
   const sessionToken = req.cookies?.session;
   if (sessionToken) {
     const sessionIDHash = createHash("sha256").update(sessionToken).digest("hex");
@@ -37,7 +37,7 @@ authRouter.post("/auth/logout", async (req, res) => {
   res.status(200).json({ message: "Successfully logged out" });
 });
 
-authRouter.post("/auth/signup", async (req, res) => {
+authRouter.post("/signup", async (req, res) => {
   const parsed = signupSchema.safeParse(req.body);
   if (!parsed.success) {
     return res.status(400).json({ error: z.treeifyError(parsed.error) });
@@ -65,7 +65,7 @@ authRouter.post("/auth/signup", async (req, res) => {
   }
 });
 
-authRouter.post("/auth/login", async (req, res) => {
+authRouter.post("/login", async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) {
     return res.status(400).json({ error: z.treeifyError(parsed.error) });
