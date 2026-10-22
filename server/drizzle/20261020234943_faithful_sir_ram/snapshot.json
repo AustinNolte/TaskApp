@@ -2,9 +2,7 @@
   "version": "8",
   "dialect": "postgres",
   "id": "fff5631d-5eea-4973-b6b8-9a8f57f670a2",
-  "prevIds": [
-    "ec5bc51a-20fd-48b7-8fdd-b77cb744c9f2"
-  ],
+  "prevIds": ["ec5bc51a-20fd-48b7-8fdd-b77cb744c9f2"],
   "ddl": [
     {
       "isRlsEnabled": false,
@@ -137,14 +135,10 @@
     },
     {
       "nameExplicit": false,
-      "columns": [
-        "user_id"
-      ],
+      "columns": ["user_id"],
       "schemaTo": "public",
       "tableTo": "users",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "tasks_user_id_users_id_fkey",
@@ -153,9 +147,7 @@
       "table": "tasks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "tasks_pkey",
       "schema": "public",
@@ -163,9 +155,7 @@
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "users_pkey",
       "schema": "public",
@@ -174,9 +164,7 @@
     },
     {
       "nameExplicit": false,
-      "columns": [
-        "email"
-      ],
+      "columns": ["email"],
       "nullsNotDistinct": false,
       "name": "users_email_key",
       "schema": "public",

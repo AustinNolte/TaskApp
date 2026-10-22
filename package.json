@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "concurrently -n server,client -c blue,green \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
-    "build": "npm --prefix server run build && npm --prefix client run build",
-    "db": "sh -c 'npm --prefix server run db:\"$0\"'"
+    "build": "npm --prefix shared run build && npm --prefix server run build && npm --prefix client run build",
+    "db": "sh -c 'npm --prefix server run db:\"$0\"'",
+    "predev": "npm --prefix shared run build"
   },
   "type": "commonjs",
   "private": true,
   "devDependencies": {
-    "concurrently": "^10.0.6"
-  }
+    "concurrently": "^10.0.6",
+    "prettier": "^3.9.10"
+  },
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ]
 }
