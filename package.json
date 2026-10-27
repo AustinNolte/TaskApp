@@ -5,13 +5,19 @@
     "dev": "concurrently -n server,client -c blue,green \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "build": "npm --prefix shared run build && npm --prefix server run build && npm --prefix client run build",
     "db": "sh -c 'npm --prefix server run db:\"$0\"'",
-    "predev": "npm --prefix shared run build"
+    "predev": "npm --prefix shared run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck:tests": "tsc --noEmit -p tsconfig.test.json"
   },
   "type": "commonjs",
   "private": true,
   "devDependencies": {
+    "@types/supertest": "^7.2.1",
     "concurrently": "^10.0.6",
-    "prettier": "^3.9.10"
+    "prettier": "^3.9.10",
+    "supertest": "^7.3.1",
+    "vitest": "^5.0.5"
   },
   "workspaces": [
     "client",
