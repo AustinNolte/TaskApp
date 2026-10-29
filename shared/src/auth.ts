@@ -26,5 +26,12 @@ export const loginSchema = z.object({
   password: z.string().min(1),
 });
 
+export const userSchema = z.object({
+  id: z.uuid(),
+  name: z.string(),
+  email: z.email(),
+});
+
+export type User = z.infer<typeof userSchema>;
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;

@@ -13,6 +13,7 @@
   "type": "commonjs",
   "private": true,
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/supertest": "^7.2.1",
     "concurrently": "^10.0.6",
     "prettier": "^3.9.10",
@@ -23,5 +24,8 @@
     "client",
     "server",
     "shared"
-  ]
+  ],
+  "dependencies": {
+    "cors": "^2.8.6"
+  }
 }
