@@ -1,4 +1,5 @@
 import type { AuthTypes } from "../types/auth";
+import AuthForm from "./AuthForm";
 
 interface AuthPageProps {
   mode: AuthTypes;
@@ -6,11 +7,11 @@ interface AuthPageProps {
 
 function AuthPage({ mode }: AuthPageProps) {
   if (mode == "login") {
-    return <div> login </div>;
+    return <AuthForm label="login" />;
   }
 
   if (mode == "sign-up") {
-    return <div> sign-up </div>;
+    return <AuthForm label="sign-up" />;
   }
 }
 

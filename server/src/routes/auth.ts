@@ -40,7 +40,7 @@ authRouter.post("/logout", async (req, res) => {
 authRouter.post("/signup", async (req, res) => {
   const parsed = signupSchema.safeParse(req.body);
   if (!parsed.success) {
-    return res.status(400).json({ error: z.treeifyError(parsed.error) });
+    return res.status(400).json({ error: z.prettifyError(parsed.error) });
   }
 
   const { name, email, password } = parsed.data;
