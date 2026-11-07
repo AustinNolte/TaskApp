@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import React, { useState } from "react";
-import type { AuthTypes } from "../types/auth";
-import { useAuth } from "../auth/AuthContext";
+import type { AuthTypes } from "../../types/auth";
+import { useAuth } from "../../auth/AuthContext";
 import { useNavigate } from "react-router";
 
 export interface AuthFormProps {
@@ -54,7 +54,7 @@ function AuthForm({ label, children }: AuthFormProps) {
       <form onSubmit={onSubmit}>
         {isSignup && (
           <div>
-            <label htmlFor="signup-name">Name:</label>
+            <label htmlFor="name">Name:</label>
             <input
               type="text"
               id="name"

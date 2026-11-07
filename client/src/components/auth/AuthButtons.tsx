@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { AuthTypes } from "../types/auth";
+import type { AuthTypes } from "../../types/auth";
 
 export interface AuthButtonProps {
   label: AuthTypes;

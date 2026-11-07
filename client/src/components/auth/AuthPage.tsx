@@ -1,4 +1,4 @@
-import type { AuthTypes } from "../types/auth";
+import type { AuthTypes } from "../../types/auth";
 import AuthForm from "./AuthForm";
 
 interface AuthPageProps {

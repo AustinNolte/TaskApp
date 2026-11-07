@@ -11,7 +11,9 @@ const WEEK_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 taskRouter.get("/", async (req, res) => {
   const userTasks = await db.select().from(tasks).where(eq(tasks.userId, req.user!.id));
-
+  if (userTasks.length === 0) {
+    return res.status(200).json({ tasks: [] });
+  }
   res.status(200).json({ tasks: userTasks });
 });
 
