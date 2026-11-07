@@ -15,6 +15,23 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [taskLoading, setTaskLoading] = useState<boolean>(false);
   const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+
+  const handleTaskToggle = async (id: number, c: boolean) => {
+    const response = await fetch(`/api/tasks/${id}`, {
+      credentials: "include",
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed: !c }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      setTasks((prev) => prev.map((t) => (t.id === data.task.id ? data.task : t)));
+      setError(null);
+    } else {
+      setError(data.error);
+    }
+  };
 
   const handleTaskDelete = async (id: number) => {
     const response = await fetch(`/api/tasks/${id}`, {
@@ -31,9 +48,25 @@ function App() {
   };
 
   const handleAddTask = async (t: Task) => {
-    console.log("here");
     setTasks((prev) => [...prev, t]);
     setShowTaskForm(false);
+    setEditingTask(null);
+  };
+
+  const handleUpdateTask = async (t: Task) => {
+    setTasks((prev) => prev.map((x) => (x.id === t.id ? t : x)));
+    setShowTaskForm(false);
+    setEditingTask(null);
+  };
+
+  const handleEditTask = (task: Task) => {
+    setEditingTask(task);
+    setShowTaskForm(true);
+  };
+
+  const closeTaskForm = () => {
+    setShowTaskForm(false);
+    setEditingTask(null);
   };
 
   const loadTasks = async () => {
@@ -84,17 +117,36 @@ function App() {
     <div>
       <div>
         {tasks.length > 0 &&
-          tasks.map((task) => <TaskCard task={task} key={task.id} onDelete={handleTaskDelete} />)}
+          tasks.map((task) => (
+            <TaskCard
+              task={task}
+              key={task.id}
+              onDelete={handleTaskDelete}
+              onToggle={handleTaskToggle}
+              onEdit={handleEditTask}
+            />
+          ))}
       </div>
       <div>
-        <button onClick={() => setShowTaskForm(true)} disabled={showTaskForm}>
+        <button
+          onClick={() => {
+            setEditingTask(null);
+            setShowTaskForm(true);
+          }}
+          disabled={showTaskForm}
+        >
           Create Task
         </button>
       </div>
       {showTaskForm && (
         <div className="overlay">
           <div className="card">
-            <TaskForm onAddTask={handleAddTask} />
+            <TaskForm
+              onAddTask={handleAddTask}
+              onUpdateTask={handleUpdateTask}
+              onClose={closeTaskForm}
+              task={editingTask}
+            />
           </div>
         </div>
       )}

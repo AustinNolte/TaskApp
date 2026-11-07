@@ -39,7 +39,7 @@ taskRouter.post("/", async (req, res) => {
   const parsed = createTaskSchema.safeParse(req.body);
 
   if (!parsed.success) {
-    return res.status(400).json({ error: z.treeifyError(parsed.error) });
+    return res.status(400).json({ error: z.prettifyError(parsed.error) });
   }
 
   const { title, description } = parsed.data;
@@ -68,7 +68,7 @@ taskRouter.patch("/:id", async (req, res) => {
   const parsed = updateTaskSchema.safeParse(req.body);
 
   if (!parsed.success) {
-    return res.status(400).json({ error: z.treeifyError(parsed.error) });
+    return res.status(400).json({ error: z.prettifyError(parsed.error) });
   }
 
   const updateValues: Partial<{
