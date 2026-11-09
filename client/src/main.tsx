@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { AuthProvider } from "./auth/AuthContext.tsx";
 import AuthPage from "./components/auth/AuthPage.tsx";
+import NavBar from "./components/NavBar.tsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -15,7 +16,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <NavBar>
+        <RouterProvider router={router} />
+      </NavBar>
     </AuthProvider>
   </StrictMode>,
 );

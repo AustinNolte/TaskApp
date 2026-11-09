@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Task } from "shared";
 
 interface TaskFormProps {
@@ -23,6 +23,14 @@ function TaskForm({ onAddTask, onUpdateTask, onClose, task }: TaskFormProps) {
     dueDate: task ? formatLocalDate(task.dueDate) : "",
   });
   const isEdit = task !== null;
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [onClose]);
 
   const onSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault();
@@ -83,42 +91,58 @@ function TaskForm({ onAddTask, onUpdateTask, onClose, task }: TaskFormProps) {
     <div>
       <form onSubmit={onSubmit}>
         <div>
-          <label htmlFor="title"> Title: </label>
+          <label htmlFor="title">Title:</label>
           <input
             type="text"
             id="title"
             name="title"
+            className="form-input"
             placeholder="Enter Title"
             value={formData.title}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label htmlFor="description"> Description: </label>
+          <label htmlFor="description">Description:</label>
           <input
             type="text"
             id="description"
             name="description"
+            className="form-input"
             placeholder="Enter description"
             value={formData.description}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label htmlFor="dueDate"> Due Date: </label>
+          <label htmlFor="dueDate">Due Date:</label>
           <input
             type="datetime-local"
             id="dueDate"
             name="dueDate"
+            className="form-input"
             placeholder="Enter due date (defauts to 7 days from now if left empty)"
             value={formData.dueDate}
             onChange={handleChange}
           />
         </div>
-        <button type="submit" disabled={submitting}>
-          Submit
-        </button>
-        {error && <p>{error}</p>}
+        <div className="flex justify-center">
+          <button
+            className="flex items-center gap-2 rounded-md bg-golden-orange-500 px-4 py-2 m-2 text-sm font-semibold text-ink-black-400 shadow-md hover:bg-golden-orange-600 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40 transition-colors"
+            type="submit"
+            disabled={submitting}
+          >
+            Submit
+          </button>
+          <button
+            className="flex items-center gap-2 rounded-md border border-pearl-aqua-600/50 px-2.5 py-1.5 m-2 text-xs text-pearl-aqua-800 hover:bg-pearl-aqua-600/25 hover:text-pearl-aqua-900 transition-colors"
+            type="button"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+        </div>
+        {error && <p className="text-brown-red-700">{error}</p>}
       </form>
     </div>
   );

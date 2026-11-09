@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 import React, { useState } from "react";
 import type { AuthTypes } from "../../types/auth";
+import "../../index.css";
 import { useAuth } from "../../auth/AuthContext";
 import { useNavigate } from "react-router";
+import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from "@heroicons/react/24/outline";
 
 export interface AuthFormProps {
   label: AuthTypes;
@@ -50,7 +52,7 @@ function AuthForm({ label, children }: AuthFormProps) {
   };
 
   return (
-    <div>
+    <div className="flex justify-center py-4">
       <form onSubmit={onSubmit}>
         {isSignup && (
           <div>
@@ -59,6 +61,7 @@ function AuthForm({ label, children }: AuthFormProps) {
               type="text"
               id="name"
               name="name"
+              className="form-input"
               placeholder="Enter name"
               value={formData.name}
               onChange={handleChange}
@@ -71,6 +74,7 @@ function AuthForm({ label, children }: AuthFormProps) {
             type="email"
             id="email"
             name="email"
+            className="form-input"
             placeholder="Enter email"
             value={formData.email}
             onChange={handleChange}
@@ -82,14 +86,28 @@ function AuthForm({ label, children }: AuthFormProps) {
             type="password"
             id="password"
             name="password"
+            className="form-input"
             placeholder="Enter password"
             value={formData.password}
             onChange={handleChange}
           />
         </div>
-        <div>
-          <button type="submit" disabled={submitting}>
+        <div className="flex justify-center">
+          <button
+            className="flex items-center gap-2 rounded-md bg-golden-orange-500 px-4 py-2 m-2 text-sm font-semibold text-ink-black-400 shadow-md hover:bg-golden-orange-600 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40 transition-colors"
+            type="submit"
+            disabled={submitting}
+          >
+            <ArrowUturnRightIcon className="size-4" />
             Submit
+          </button>
+          <button
+            className="flex items-center gap-2 rounded-md border border-pearl-aqua-600/50 px-2.5 py-1.5 m-2 text-xs text-pearl-aqua-800 hover:bg-pearl-aqua-600/25 hover:text-pearl-aqua-900 transition-colors"
+            type="button"
+            onClick={() => navigate("/")}
+          >
+            <ArrowUturnLeftIcon className="size-4" />
+            Back
           </button>
         </div>
       </form>

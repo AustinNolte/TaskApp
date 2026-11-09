@@ -3,7 +3,6 @@ import AuthButton from "./components/auth/AuthButtons";
 import type { AuthTypes } from "./types/auth";
 import { useAuth } from "./auth/AuthContext";
 import type { Task } from "shared";
-import "./App.css";
 import { useEffect, useState } from "react";
 import TaskCard from "./components/tasks/TaskCard";
 import TaskForm from "./components/tasks/TaskForm";
@@ -100,7 +99,7 @@ function App() {
 
   if (!user)
     return (
-      <div>
+      <div className="flex items-center gap-2 w-full justify-center">
         {authButtons.map((btn) => (
           <AuthButton key={btn.label} label={btn.label} onClick={btn.onClick} />
         ))}
@@ -114,8 +113,22 @@ function App() {
   }
 
   return (
-    <div>
-      <div>
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-6">
+      <div className="flex items-center justify-between">
+        {error && <p className="text-sm text-brown-red-700">{error}</p>}
+        {taskLoading && <p className="text-sm text-pearl-aqua-600">fetching tasks...</p>}
+        <button
+          onClick={() => {
+            setEditingTask(null);
+            setShowTaskForm(true);
+          }}
+          disabled={showTaskForm}
+          className="ml-auto flex items-center gap-2 rounded-lg bg-pearl-aqua-500 px-4 py-2 text-sm font-semibold text-ink-black-400 shadow-md hover:bg-pearl-aqua-400 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40 transition"
+        >
+          + Create Task
+        </button>
+      </div>
+      <div className="flex flex-col gap-4">
         {tasks.length > 0 &&
           tasks.map((task) => (
             <TaskCard
@@ -126,17 +139,6 @@ function App() {
               onEdit={handleEditTask}
             />
           ))}
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            setEditingTask(null);
-            setShowTaskForm(true);
-          }}
-          disabled={showTaskForm}
-        >
-          Create Task
-        </button>
       </div>
       {showTaskForm && (
         <div className="overlay">
